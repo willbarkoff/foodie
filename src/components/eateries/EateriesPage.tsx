@@ -1,23 +1,22 @@
-import * as React from 'react';
-import * as Eateries from '../../apis/eateries';
-import LoadingIndicator from '../ui/LoadingIndicator';
-import EateriesList from './EateriesList';
-import Greeting from './Greeting';
+import * as React from "react";
+import * as Eateries from "../../apis/eateries";
+import LoadingIndicator from "../ui/LoadingIndicator";
+import EateriesList from "./EateriesList";
+import Greeting from "./Greeting";
 
 const EateriesPage: React.FC<{}> = () => {
 	const [eateriesResponse, setEateriesResponse] = React.useState<Eateries.EateriesResponse | null>(null);
 
 	React.useEffect(() => {
+		// unfortunatly, react hooks don't support async/await well, so we need to use promises.
 		let mounted = true;
-		const runEffect = async () => {
-			let eateries = await Eateries.getList();
-			setEateriesResponse(eateries);
-		}
-
-		// sadly, there's no better way :'( - see https://stackoverflow.com/q/56838392/9119306
-		runEffect();
+		Eateries.getList().then((eateries) => {
+			if (mounted) {
+				setEateriesResponse(eateries);
+			}
+		});
 		return () => mounted = false;
-	})
+	}, []);
 
 
 	return <div>
@@ -40,10 +39,10 @@ const EateriesPage: React.FC<{}> = () => {
 								</div>
 								<div className="message-body">
 									An unexpected error occured while fetching eatery data from Cornell Dining's API. The following was returned from the API:
-								<hr />
+									<hr />
 									<pre>
 										<code>
-											{JSON.stringify(eateriesResponse, null, '\t')}
+											{JSON.stringify(eateriesResponse, null, "\t")}
 										</code>
 									</pre>
 								</div>
@@ -55,7 +54,7 @@ const EateriesPage: React.FC<{}> = () => {
 				}
 			</div>
 		</section>
-	</div>
-}
+	</div>;
+};
 
 export default EateriesPage;

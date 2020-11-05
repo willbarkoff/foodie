@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 
 const Navbar: React.FC<{}> = () => {
-	const [isActive, setIsActive] = React.useState(false)
+	const [isActive, setIsActive] = React.useState(false);
 
 	return <nav className="navbar" role="navigation" aria-label="main navigation">
 		<div className="navbar-brand">
@@ -35,24 +35,24 @@ const Navbar: React.FC<{}> = () => {
 				<div className="navbar-item has-dropdown is-hoverable">
 					<a className="navbar-link">
 						More
-	  				</a>
+					</a>
 
 					<div className="navbar-dropdown">
 						<Link to="/about" className="navbar-item">
 							About
-					</Link>
+						</Link>
 						<Link to="/contact" className="navbar-item">
 							Contact
-					</Link>
+						</Link>
 						<hr className="navbar-divider" />
 						<Link to="/report" className="navbar-item">
 							Report an Issue
-					</Link>
+						</Link>
 					</div>
 				</div>
 			</div>
 		</div>
-	</nav>
-}
+	</nav>;
+};
 
 export default Navbar;

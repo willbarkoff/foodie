@@ -1,8 +1,10 @@
-import * as React from 'react';
-import * as Mapbox from '../../apis/mapbox'
-import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.min.css"
-import { Eatery, getPaymentMethodShort } from "../../apis/eateries"
-import UpcomingMeals from './UpcomingMeals';
+import * as React from "react";
+import * as Mapbox from "../../apis/mapbox";
+import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.min.css";
+import { Eatery, getPaymentMethodShort, isOpen } from "../../apis/eateries";
+import UpcomingMeals from "./UpcomingMeals";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface EateriesListProps {
 	eateries: Eatery[];
@@ -13,7 +15,7 @@ const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 		{eateries.map((eatery, i) => <div key={i} className="box">
 			<div className="columns">
 				<div className="column is-four-fifths">
-					<h1 className="title">{eatery.name}</h1>
+					<h1 className="title"><FontAwesomeIcon icon={faCircle} className={`${isOpen(eatery) ? "has-text-success" : "has-text-danger"}`} /> {eatery.name}</h1>
 					<h1 className="subtitle">{eatery.aboutshort}</h1>
 					<h3>{eatery.onlineOrderURL}</h3>
 					<div className="tags">
@@ -31,7 +33,7 @@ const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 				</div>
 			</div>
 		</div>)}
-	</div>
-}
+	</div>;
+};
 
 export default EateriesList;

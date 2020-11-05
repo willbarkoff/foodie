@@ -37,7 +37,7 @@ export interface Eatery {
 	diningCuisines: DiningCuisine[];
 	payMethods: PayMethod[];
 	diningItems: DiningItem[];
-	announcements: any[];
+	announcements: unknown[];
 	icon: string;
 }
 
@@ -142,8 +142,8 @@ export interface PaymentMethodShort {
 }
 
 export async function getList(): Promise<EateriesResponse> {
-	const resp = await fetch("https://now.dining.cornell.edu/api/1.0/dining/eateries.json")
-	const data: EateriesResponse = await resp.json()
+	const resp = await fetch("https://now.dining.cornell.edu/api/1.0/dining/eateries.json");
+	const data: EateriesResponse = await resp.json();
 
 	return data;
 }
@@ -164,12 +164,12 @@ export function getPaymentMethodShort(paymentMethod: string): PaymentMethodShort
 			return {
 				name: "CC",
 				color: "warning"
-			}
+			};
 		case "Major Credit Cards":
 			return {
 				name: "Credit",
 				color: "info"
-			}
+			};
 		case "Mobile Payments":
 			return {
 				name: "Tap",
@@ -179,11 +179,22 @@ export function getPaymentMethodShort(paymentMethod: string): PaymentMethodShort
 			return {
 				name: "Cash",
 				color: "success"
-			}
+			};
 		default:
 			return {
 				name: paymentMethod,
 				color: "dark"
-			}
+			};
 	}
+}
+
+export function isOpen(eatery: Eatery): boolean {
+	return eatery.operatingHours.filter((hours) => {
+		return hours.events.filter(isCurrent).length != 0;
+	}).length != 0;
+}
+
+export function isCurrent(hour: Event): boolean {
+	const now = new Date();
+	return hour.startTimestamp * 1000 < now.getTime() && hour.endTimestamp * 1000 > now.getTime();
 }
