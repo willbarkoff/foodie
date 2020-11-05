@@ -27,7 +27,7 @@ const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 					<UpcomingMeals operatingHours={eatery.operatingHours} />
 				</div>
 				<div className="column is-one-fifth">
-					{/* <img alt="" src={Mapbox.getStaticImage(eatery.longitude, eatery.latitude, 200, 200)} /> */}
+					<img alt="" src={Mapbox.getStaticImage(eatery.longitude, eatery.latitude, 200, 200)} />
 				</div>
 			</div>
 		</div>)}
