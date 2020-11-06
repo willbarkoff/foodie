@@ -23,14 +23,25 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 
 	eatery.diningItems.forEach((item) => {
 		let categoryItemIndex = diningItems.findIndex((categoryItem) => categoryItem.category == item.category);
+		let isNewCategory = false;
+
+		console.log(categoryItemIndex)
+
 		if (categoryItemIndex == -1) {
 			categoryItemIndex = diningItems.length;
+			isNewCategory = true;
 		}
-		const categoryItem: DiningItemCategory = diningItemsCategories[categoryItemIndex] || { category: item.category, items: [] };
 
-		// item.
+		let categoryItem: DiningItemCategory;
+
+		if (isNewCategory) {
+			categoryItem = { category: item.category, items: [] };
+		} else {
+			categoryItem = diningItems[categoryItemIndex];
+		}
 
 		categoryItem.items.push(item);
+
 		diningItems[categoryItemIndex] = categoryItem;
 	});
 
@@ -57,7 +68,7 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 								<h4 className="heading menu-category-heading">{diningItem.category}</h4>
 								<ul>
 									{diningItem.items.map((item, i) => {
-										return <li key={i}>{item.descr} {item.healthy && <HealthyChoice />}</li>;
+										return <li key={i}>{item.item} {item.healthy && <HealthyChoice />}</li>;
 									})}
 								</ul>
 							</div>;
