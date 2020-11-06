@@ -14,15 +14,18 @@ interface UpcomingMealsProps {
 // @ts-ignore because we're _too advanced_ for typescript 
 const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
-const getRelativeDate = (date: Date) => {
-	const timeBetween = new Date(date).getTime() - new Date().getTime();
+const getRelativeDate = (date: string) => {
+	const dateItems = date.split("-").map((n) => parseInt(n));
+	// months are zero-indexed in JS dates, but NOTHING ELSE is
+	const timeBetween = new Date(dateItems[0], dateItems[1] - 1, dateItems[2]).getTime() - new Date().getTime();
 	const days = Math.ceil(timeBetween / (86400000));
 	return rtf.format(days, "day");
 };
 
 const UpcomingMeals: React.FC<UpcomingMealsProps> = ({ operatingHours }) => {
 	const [activeDay, setActiveDay] = React.useState(operatingHours.findIndex((hourinfo) => {
-		const timeBetween = new Date(hourinfo.date).getTime() - new Date().getTime();
+		const dateItems = hourinfo.date.split("-").map((n) => parseInt(n));
+		const timeBetween = new Date(dateItems[0], dateItems[1] - 1, dateItems[2]).getTime() - new Date().getTime();
 		const days = Math.ceil(timeBetween / (86400000));
 		return Math.abs(days) < 1;
 	}));

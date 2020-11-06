@@ -77,7 +77,7 @@ export interface DiningItem {
 }
 
 export interface OperatingHour {
-	date: Date;
+	date: string;
 	status: string;
 	events: Event[];
 }
