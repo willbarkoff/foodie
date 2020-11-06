@@ -6,9 +6,10 @@ import Meal from "./Meal";
 
 interface DayInfoProps {
 	day: Eateries.OperatingHour;
+	showNoMenu: boolean;
 }
 
-const DayInfo: React.FC<DayInfoProps> = ({ day }) => {
+const DayInfo: React.FC<DayInfoProps> = ({ day, showNoMenu }) => {
 	if (day.events.length == 0) {
 		return <p className="has-text-centered">
 			<FontAwesomeIcon icon={faStoreSlash} /> Closed today.
@@ -17,7 +18,7 @@ const DayInfo: React.FC<DayInfoProps> = ({ day }) => {
 
 	return <div className="columns">
 		{day.events.map((meal, i) => <div className="column" key={i}>
-			<Meal meal={meal} />
+			<Meal showNoMenu={showNoMenu} meal={meal} />
 		</div>)}
 	</div>;
 };

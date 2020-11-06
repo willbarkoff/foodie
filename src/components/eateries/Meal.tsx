@@ -8,16 +8,17 @@ import HealthyChoice from "./HealthyChoice";
 
 interface MealProps {
 	meal: Eateries.Event;
+	showNoMenu: boolean;
 }
 
-const Meal: React.FC<MealProps> = ({ meal }) => {
+const Meal: React.FC<MealProps> = ({ meal, showNoMenu }) => {
 	return <>
 		<h3 className="title is-6">
 			{meal.calSummary}
 			{Eateries.isCurrent(meal) && <span className="has-text-success"> (Now)</span>}
 		</h3>
 		<h4 className="subtitle is-6">{meal.start} to {meal.end}</h4>
-		{meal.menu.length == 0 && <p><FontAwesomeIcon icon={faFrownOpen} /> No menu available</p>}
+		{meal.menu.length == 0 && showNoMenu && <p><FontAwesomeIcon icon={faFrownOpen} /> No menu available</p>}
 		{meal.menu.map((menuCategory, i) => <div key={i}>
 			<h4 className="heading menu-category-heading">{menuCategory.category}</h4>
 			<ul>

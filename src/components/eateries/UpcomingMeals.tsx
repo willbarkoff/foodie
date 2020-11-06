@@ -8,6 +8,7 @@ import DayInfo from "./DayInfo";
 
 interface UpcomingMealsProps {
 	operatingHours: Eateries.OperatingHour[];
+	showNoMenu: boolean;
 }
 
 // eslint-disable-next-line
@@ -22,7 +23,7 @@ const getRelativeDate = (date: string) => {
 	return rtf.format(days, "day");
 };
 
-const UpcomingMeals: React.FC<UpcomingMealsProps> = ({ operatingHours }) => {
+const UpcomingMeals: React.FC<UpcomingMealsProps> = ({ operatingHours, showNoMenu }) => {
 	const [activeDay, setActiveDay] = React.useState(operatingHours.findIndex((hourinfo) => {
 		const dateItems = hourinfo.date.split("-").map((n) => parseInt(n));
 		const timeBetween = new Date(dateItems[0], dateItems[1] - 1, dateItems[2]).getTime() - new Date().getTime();
@@ -40,7 +41,7 @@ const UpcomingMeals: React.FC<UpcomingMealsProps> = ({ operatingHours }) => {
 				})}
 			</ul>
 		</div>
-		<DayInfo day={operatingHours[activeDay]} />
+		<DayInfo showNoMenu={showNoMenu} day={operatingHours[activeDay]} />
 	</div>;
 };
 
