@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFrownOpen } from "@fortawesome/free-regular-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import * as Eateries from "../../apis/eateries";
 
@@ -14,6 +15,11 @@ interface MealProps {
 const Meal: React.FC<MealProps> = ({ meal, showNoMenu }) => {
 	return <>
 		<h3 className="title is-6">
+			{meal.menu.findIndex((menu) => menu.category.includes("Special Menu Event")) != -1 && <span
+				data-tooltip="Special menu event"
+			>
+				<FontAwesomeIcon icon={faStar} className="has-text-warning" />{" "}
+			</span>}
 			{meal.calSummary}
 			{Eateries.isCurrent(meal) && <span className="has-text-success"> (Now)</span>}
 		</h3>
