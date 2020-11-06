@@ -4,7 +4,7 @@ import * as Eateries from "../../apis/eateries";
 import NoResults from "../ui/NoResults";
 import Eatery from "./Eatery";
 interface EateriesListProps {
-	eateries: Eatery[];
+	eateries: Eateries.Eatery[];
 }
 
 export function useFilter(): [(e: Eateries.Eatery) => boolean, React.Dispatch<React.SetStateAction<(e: Eateries.Eatery) => boolean>>] {
