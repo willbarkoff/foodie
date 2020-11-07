@@ -55,6 +55,7 @@ const MapPage: React.FC<{}> = () => {
 									{
 										title: eatery.nameshort,
 										titleVisibility: mapkit.FeatureVisibility.Adaptive,
+										color: Eateries.isOpen(eatery) ? "#48c774" : "#ff5b40"
 									}
 								);
 							})
