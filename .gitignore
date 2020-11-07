@@ -2,3 +2,4 @@ node_modules
 .cache
 dist
 .env
+mapkitjs-key.p8

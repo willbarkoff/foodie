@@ -15,7 +15,7 @@ const EateriesPage: React.FC<{}> = () => {
 				setEateriesResponse(eateries);
 			}
 		});
-		return () => mounted = false;
+		return () => { mounted = false; };
 	}, []);
 
 

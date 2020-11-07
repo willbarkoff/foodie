@@ -13,7 +13,7 @@ export function useFilter(): [(e: Eateries.Eatery) => boolean, React.Dispatch<Re
 	return [currentFilter, setFilter];
 }
 
-export function useSort(): [(a: Eateries.Eatery, b: Eateries.Eatery) => number, React.Dispatch<React.SetStateAction<(a: Eateries.Eatery, b: Eateries.Eatery) => number>>] {
+export function useSort(): [(a: Eateries.Eatery, b: Eateries.Eatery) => number, React.Dispatch<React.SetStateAction<(a: Eateries.Eatery, b: Eateries.Eatery) => 1 | -1 | 0>>] {
 	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 	const [currentSort, setSort] = React.useState(() => {
 		return (a: Eateries.Eatery, b: Eateries.Eatery) => (Eateries.isOpen(a) == Eateries.isOpen(b) ? 0 : Eateries.isOpen(a) ? -1 : 1);

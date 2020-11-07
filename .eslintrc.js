@@ -10,7 +10,8 @@ module.exports = {
 		"plugin:@typescript-eslint/recommended",
 	],
 	globals: {
-		"module": "writable"
+		"module": "writable",
+		"mapkit": "readonly"
 	},
 	rules: {
 		"@typescript-eslint/ban-types": "off",

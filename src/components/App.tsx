@@ -6,12 +6,16 @@ import "bulma/css/bulma.min.css";
 import "./App.styl";
 import Navbar from "./ui/Navbar";
 import EateriesPage from "./eateries/EateriesPage";
+import MapPage from "./map/MapPage";
 
 const App: React.FC<{}> = () => <Router>
 	<Navbar />
 	<Switch>
 		<Route exact path="/">
 			<EateriesPage />
+		</Route>
+		<Route path="/map">
+			<MapPage />
 		</Route>
 		<Route path="*">
 			<h1>Not found :(</h1>
