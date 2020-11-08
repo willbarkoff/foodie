@@ -3,3 +3,4 @@ node_modules
 dist
 .env
 mapkitjs-key.p8
+.vercel
