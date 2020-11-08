@@ -23,7 +23,7 @@ export interface Eatery {
 	opHoursDescr: null | string;
 	googleCalendarID: string;
 	onlineOrdering: boolean;
-	onlineOrderURL: null | string;
+	onlineOrderUrl: null | string;
 	contactPhone: null | string;
 	contactEmail: null | string;
 	serviceUnitID: number | null;

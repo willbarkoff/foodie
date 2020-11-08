@@ -42,13 +42,11 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 		diningItems[categoryItemIndex] = categoryItem;
 	});
 
-
 	return <div className="box eatery">
 		<div className="columns">
 			<div className="column is-four-fifths">
 				<h1 className="title"><FontAwesomeIcon icon={faCircle} className={`${Eateries.isOpen(eatery) ? "has-text-success" : "has-text-danger"}`} /> {eatery.name}</h1>
 				<h1 className="subtitle">{eatery.aboutshort}</h1>
-				<h3>{eatery.onlineOrderURL}</h3>
 				<div className="tags">
 					{eatery.payMethods.map((payMethod, i) => <span
 						key={i}
@@ -81,6 +79,7 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 				<strong>
 					{eatery.location}
 				</strong><br />
+				{eatery.onlineOrdering && eatery.onlineOrderUrl && <a href={eatery.onlineOrderUrl} className="button is-primary is-fullwidth" target="_blank" rel="noopener noreferrer">Order online</a>}
 				<a href={`tel:${eatery.contactPhone}`}>{eatery.contactPhone}</a><br />
 				<a href={`mailto:${eatery.contactEmail}`}>{eatery.contactEmail}</a><br />
 			</div>
