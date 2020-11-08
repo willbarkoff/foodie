@@ -7,6 +7,7 @@ import "./MapPage.styl";
 
 const MapPage: React.FC<{}> = () => {
 	const [eateriesResponse, setEateriesResponse] = React.useState<Eateries.EateriesResponse | null>(null);
+	const [currentFilter, setFilter] = React.useState(() => () => true);
 
 	React.useEffect(() => {
 		// unfortunatly, react hooks don't support async/await well, so we need to use promises.
@@ -19,13 +20,12 @@ const MapPage: React.FC<{}> = () => {
 		return () => { mounted = false; };
 	}, []);
 
-
 	return <div>
 		<section className="hero is-info is-bold">
 			<div className="hero-body">
 				<div className="container">
 					<h1 className="title">Map</h1>
-					<h2 className="subtitle">Map.</h2>
+					<h2 className="subtitle">Find a meal near you</h2>
 				</div>
 			</div>
 		</section>
@@ -49,7 +49,7 @@ const MapPage: React.FC<{}> = () => {
 						</article>
 						:
 						<MapKitMap lat={42.447222} lon={-76.483056} zoomLevel={0.025} className="map" annotations={
-							eateriesResponse.data.eateries.map((eatery) => {
+							eateriesResponse.data.eateries.filter(currentFilter).map((eatery) => {
 								return new mapkit.MarkerAnnotation(
 									new mapkit.Coordinate(eatery.latitude, eatery.longitude),
 									{

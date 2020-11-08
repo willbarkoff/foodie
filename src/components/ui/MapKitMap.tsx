@@ -36,6 +36,24 @@ class MapKitMap extends React.Component<MapProps> {
 		this.map = map;
 	}
 
+	componentDidUpdate(oldProps: MapProps, prevState: {}): void {
+		if (!this.map) return;
+		if (this.props.annotations) {
+			this.map.annotations = this.props.annotations;
+		} else {
+			this.map.annotations = [];
+		}
+
+		if (this.props.lat != oldProps.lat || this.props.lon != oldProps.lon || this.props.zoomLevel != oldProps.zoomLevel) {
+			this.map.region = new mapkit.CoordinateRegion(
+				new mapkit.Coordinate(this.props.lat, this.props.lon),
+				new mapkit.CoordinateSpan(this.props.zoomLevel, this.props.zoomLevel)
+			);
+
+
+		}
+	}
+
 	render(): JSX.Element {
 		return <div className={this.props.className} ref={this.mapRef}></div>;
 	}
