@@ -8,6 +8,9 @@ import Navbar from "./ui/Navbar";
 import EateriesPage from "./eateries/EateriesPage";
 import MapPage from "./map/MapPage";
 import AboutPage from "./AboutPage";
+import ContactPage from "./ContactPage";
+import NotFoundPage from "./NotFoundPage";
+import IssuePage from "./issues/IssuePage";
 
 const App: React.FC<{}> = () => <Router>
 	<Navbar />
@@ -21,8 +24,14 @@ const App: React.FC<{}> = () => <Router>
 		<Route path="/about">
 			<AboutPage />
 		</Route>
+		<Route path="/contact">
+			<ContactPage />
+		</Route>
+		<Route path="/issue">
+			<IssuePage />
+		</Route>
 		<Route path="*">
-			<h1>Not found :(</h1>
+			<NotFoundPage />
 		</Route>
 	</Switch>
 </Router >;

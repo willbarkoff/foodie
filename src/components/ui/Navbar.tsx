@@ -45,7 +45,7 @@ const Navbar: React.FC<{}> = () => {
 							Contact
 						</Link>
 						<hr className="navbar-divider" />
-						<Link to="/report" className="navbar-item">
+						<Link to="/issue" className="navbar-item">
 							Report an Issue
 						</Link>
 					</div>
