@@ -24,9 +24,9 @@ const Navbar: React.FC<{}> = () => {
 					Eateries
 				</Link>
 
-				<Link to="/menus" className="navbar-item">
+				{/* <Link to="/menus" className="navbar-item">
 					Menus
-				</Link>
+				</Link> */}
 
 				<Link to="/map" className="navbar-item">
 					Map

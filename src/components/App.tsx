@@ -7,6 +7,7 @@ import "./App.styl";
 import Navbar from "./ui/Navbar";
 import EateriesPage from "./eateries/EateriesPage";
 import MapPage from "./map/MapPage";
+import AboutPage from "./AboutPage";
 
 const App: React.FC<{}> = () => <Router>
 	<Navbar />
@@ -16,6 +17,9 @@ const App: React.FC<{}> = () => <Router>
 		</Route>
 		<Route path="/map">
 			<MapPage />
+		</Route>
+		<Route path="/about">
+			<AboutPage />
 		</Route>
 		<Route path="*">
 			<h1>Not found :(</h1>
