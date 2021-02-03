@@ -7,30 +7,109 @@ interface EateriesListProps {
 	eateries: Eateries.Eatery[];
 }
 
-export function useFilter(): [(e: Eateries.Eatery) => boolean, React.Dispatch<React.SetStateAction<(e: Eateries.Eatery) => boolean>>] {
-	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-	const [currentFilter, setFilter] = React.useState(() => { return (e: Eateries.Eatery) => true; });
-	return [currentFilter, setFilter];
-}
+const createLocationFilter = (loc: string) => {
+	return (e: Eateries.Eatery) => e.campusArea.descrshort == loc;
+};
 
-export function useSort(): [(a: Eateries.Eatery, b: Eateries.Eatery) => number, React.Dispatch<React.SetStateAction<(a: Eateries.Eatery, b: Eateries.Eatery) => 1 | -1 | 0>>] {
-	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-	const [currentSort, setSort] = React.useState(() => {
-		return (a: Eateries.Eatery, b: Eateries.Eatery) => (Eateries.isOpen(a) == Eateries.isOpen(b) ? 0 : Eateries.isOpen(a) ? -1 : 1);
-	});
-	return [currentSort, setSort];
-}
+const filters: Record<string, (e: Eateries.Eatery) => boolean> = {
+	"north": createLocationFilter("North"),
+	"west": createLocationFilter("West"),
+	"central": createLocationFilter("Central"),
+	"open": e => Eateries.isOpen(e),
+	"closed": e => !Eateries.isOpen(e),
+};
 
+const locationFilters = ["north", "west", "central"];
+const stateFilters = ["open", "closed"];
 
 const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
-	const [currentFilter] = useFilter();
-	const [currentSort] = useSort();
+	const [currentFilterChain, setCurrentFilterChain] = React.useState([] as string[]);
+	const [locationFilterValue, setLocationFilterValue] = React.useState("");
+	const [stateFilterValue, setStateFilterValue] = React.useState("");
 
-	const filteredAndSorted = eateries.filter(currentFilter).sort(currentSort);
+	const filtered = eateries.filter(currentFilterChain.map(f => filters[f]).reduce((acc, cv) => {
+		return (e: Eateries.Eatery) => {
+			if (!acc(e)) {
+				return false;
+			}
+			return cv(e);
+		};
+	}, () => true));
+
+	const updateLocationFilter = (f?: string) => {
+		const filters = currentFilterChain;
+		locationFilters.forEach(filter => {
+			const index = filters.indexOf(filter);
+			if (index > -1) {
+				filters.splice(index, 1);
+			}
+		});
+
+		if (f) {
+			filters.push(f);
+		}
+		setCurrentFilterChain(filters);
+		setLocationFilterValue(f || "");
+	};
+
+	const updateStateFilter = (f?: string) => {
+		const filters = currentFilterChain;
+		stateFilters.forEach(filter => {
+			const index = filters.indexOf(filter);
+			if (index > -1) {
+				filters.splice(index, 1);
+			}
+		});
+
+		if (f) {
+			filters.push(f);
+		}
+
+		setCurrentFilterChain(filters);
+		setStateFilterValue(f || "");
+	};
 
 	return <div>
-		{filteredAndSorted.length == 0 && <NoResults />}
-		{filteredAndSorted.map((eatery, i) => <Eatery key={i} eatery={eatery} />)}
+		<h3 className="filterString is-size-3 block">
+			I want to find an eatery on{" "}
+			<div className="select is-medium">
+				<select onChange={e => updateLocationFilter(e.target.value)} value={locationFilterValue}>
+					<option value="">Campus</option>
+					<option value="north">North Campus</option>
+					<option value="central">Central Campus</option>
+					<option value="west">West Campus</option>
+				</select>
+			</div>
+			{" "}that is{" "}
+			<div className="select is-medium">
+				<select onChange={e => updateStateFilter(e.target.value)} value={stateFilterValue}>
+					<option value="">open or closed</option>
+					<option value="open">open</option>
+					<option value="closed">closed</option>
+				</select>
+			</div>
+			{/* {" "}where I can pay with{" "}
+			<div className="select is-medium">
+				<select>
+					<option value="">a method</option>
+					<option value="">BRBs</option>
+					<option value="open">meal swipes</option>
+					<option value="closed">Cornell Card</option>
+					<option value="closed">Credit Card</option>
+					<option value="closed">Tap-to-pay</option>
+				</select>
+			</div> */}
+			.
+			{/* List{" "}
+			<div className="select is-medium">
+				<select>
+					<option value="openclose">open eateries first</option>
+					<option value="alphebetical">in alphebetical order</option>
+				</select>
+			</div>. */}
+		</h3>
+		{filtered.length == 0 && <NoResults />}
+		{filtered.map((eatery, i) => <Eatery key={i} eatery={eatery} />)}
 	</div>;
 };
 
