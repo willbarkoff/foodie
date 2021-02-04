@@ -25,6 +25,8 @@ const AboutPage: React.FC<{}> = () => <StaticPage title="About">
 		<li><a href="https://developer.apple.com/documentation/mapkitjs">MapKitJS</a></li>
 		<li><a href="https://parceljs.org/">Parcel</a></li>
 	</ul>
+	<h2>About this deployment</h2>
+	<p>This is Foodie. {process.env.GIT_COMMIT ? <span>Commit <code>{process.env.GIT_COMMIT}</code></span> : <span>Commit information is not available.</span>}</p>
 </StaticPage>;
 
 export default AboutPage;
