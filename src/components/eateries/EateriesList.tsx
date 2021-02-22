@@ -38,15 +38,23 @@ const filters: Record<string, (e: Eateries.Eatery) => boolean> = {
 	"central": createLocationFilter("Central"),
 	"open": e => Eateries.isOpen(e),
 	"closed": e => !Eateries.isOpen(e),
+	"brb": e => e.payMethods.findIndex(pm => pm.descrshort == Eateries.PayMethods.brb) > -1,
+	"swipe": e => e.payMethods.findIndex(pm => pm.descrshort == Eateries.PayMethods.swipe) > -1,
+	"cornellCard": e => e.payMethods.findIndex(pm => pm.descrshort == Eateries.PayMethods.cornellCard) > -1,
+	"creditCard": e => e.payMethods.findIndex(pm => pm.descrshort == Eateries.PayMethods.creditCard) > -1,
+	"tap": e => e.payMethods.findIndex(pm => pm.descrshort == Eateries.PayMethods.tap) > -1,
+	"cash": e => e.payMethods.findIndex(pm => pm.descrshort == Eateries.PayMethods.cash) > -1
 };
 
 const locationFilters = ["north", "west", "central"];
 const stateFilters = ["open", "closed"];
+const payFilters = ["brb", "swipe", "cornellCard", "creditCard", "tap", "cash"];
 
 const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 	const [currentFilterChain, setCurrentFilterChain] = React.useState([] as string[]);
 	const [locationFilterValue, setLocationFilterValue] = React.useState("");
 	const [stateFilterValue, setStateFilterValue] = React.useState("");
+	const [payFilterValue, setPayFilterValue] = React.useState("");
 	const [sort, updateSort] = React.useState("openclose");
 	const [geolocation, updateGeolocation] = React.useState(null as GeolocationPosition | null);
 	const [geoErr, updateGeoErr] = React.useState(null as GeolocationPositionError | null);
@@ -80,6 +88,7 @@ const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 			}
 		},
 		"openclose": (a, b) => (Eateries.isOpen(a) == Eateries.isOpen(b) ? 0 : Eateries.isOpen(a) ? -1 : 1),
+		//@ts-expect-error this works and i'm not sure why
 		"closest": (a, b) => haversine(a.coordinates.latitude, a.coordinates.longitude, geolocation?.coords.latitude, geolocation?.coords.longitude) - haversine(b.coordinates.latitude, b.coordinates.longitude, geolocation?.coords.latitude, geolocation?.coords.longitude),
 	};
 
@@ -121,6 +130,24 @@ const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 		setCurrentFilterChain(filters);
 	};
 
+	const updatePayFilter = (f?: string) => {
+		setPayFilterValue(f || "");
+
+		const filters = currentFilterChain;
+		payFilters.forEach(filter => {
+			const index = filters.indexOf(filter);
+			if (index > -1) {
+				filters.splice(index, 1);
+			}
+		});
+
+		if (f) {
+			filters.push(f);
+		}
+
+		setCurrentFilterChain(filters);
+	};
+
 	return <div>
 		<h3 className="filterString is-size-3 block">
 			I want to find an eatery on{" "}
@@ -140,17 +167,18 @@ const EateriesList: React.FC<EateriesListProps> = ({ eateries }) => {
 					<option value="closed">closed</option>
 				</select>
 			</div>
-			{/* {" "}where I can pay with{" "}
+			{" "}where I can pay with{" "}
 			<div className="select is-medium">
-				<select>
+				<select onChange={e => updatePayFilter(e.target.value)} value={payFilterValue}>
 					<option value="">a method</option>
-					<option value="">BRBs</option>
-					<option value="open">meal swipes</option>
-					<option value="closed">Cornell Card</option>
-					<option value="closed">Credit Card</option>
-					<option value="closed">Tap-to-pay</option>
+					<option value="brb">BRBs</option>
+					<option value="swipe">meal swipes</option>
+					<option value="cornellCard">Cornell Card</option>
+					<option value="creditCard">Credit Card</option>
+					<option value="tap">Tap-to-pay</option>
+					<option value="cash">Cash</option>
 				</select>
-			</div> */}
+			</div>
 			.
 			List{" "}
 			<div className="select is-medium">

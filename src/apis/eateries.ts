@@ -198,3 +198,11 @@ export function isCurrent(hour: Event): boolean {
 	const now = new Date();
 	return hour.startTimestamp * 1000 < now.getTime() && hour.endTimestamp * 1000 > now.getTime();
 }
+export const PayMethods: Record<string, string> = {
+	"brb": "Meal Plan - Debit",
+	"swipe": "Meal Plan - Swipe",
+	"cornellCard": "Cornell Card",
+	"creditCard": "Major Credit Cards",
+	"tap": "Mobile Payments",
+	"cash": "Cash",
+};
