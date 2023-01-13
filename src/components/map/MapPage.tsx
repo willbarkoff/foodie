@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Eateries from "../../apis/eateries";
-import MapKitMap from "../ui/MapKitMap";
+// import MapKitMap from "../ui/MapKitMap";
 import LoadingIndicator from "../ui/LoadingIndicator";
 
 import "./MapPage.styl";
@@ -48,18 +48,19 @@ const MapPage: React.FC<{}> = () => {
 							</div>
 						</article>
 						:
-						<MapKitMap lat={42.447222} lon={-76.483056} zoomLevel={0.025} className="map" annotations={
-							eateriesResponse.data.eateries.filter(currentFilter).map((eatery) => {
-								return new mapkit.MarkerAnnotation(
-									new mapkit.Coordinate(eatery.latitude, eatery.longitude),
-									{
-										title: eatery.nameshort,
-										titleVisibility: mapkit.FeatureVisibility.Adaptive,
-										color: Eateries.isOpen(eatery) ? "#48c774" : "#ff5b40"
-									}
-								);
-							})
-						} />
+						// <MapKitMap lat={42.447222} lon={-76.483056} zoomLevel={0.025} className="map" annotations={
+						// 	eateriesResponse.data.eateries.filter(currentFilter).map((eatery) => {
+						// 		return new mapkit.MarkerAnnotation(
+						// 			new mapkit.Coordinate(eatery.latitude, eatery.longitude),
+						// 			{
+						// 				title: eatery.nameshort,
+						// 				titleVisibility: mapkit.FeatureVisibility.Adaptive,
+						// 				color: Eateries.isOpen(eatery) ? "#48c774" : "#ff5b40"
+						// 			}
+						// 		);
+						// 	})
+						// } />
+						<p>No.</p>
 					}
 				</div>
 			}

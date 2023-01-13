@@ -1,10 +1,13 @@
+import * as React from "react";
+
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as React from "react";
+import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
+
 import * as Eateries from "../../apis/eateries";
-import MapKitMap from "../ui/MapKitMap";
 import HealthyChoice from "./HealthyChoice";
 import UpcomingMeals from "./UpcomingMeals";
+
 
 import "./Eatery.styl";
 
@@ -72,10 +75,17 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 				}
 			</div>
 			<div className="column is-one-fifth">
-				<MapKitMap lat={eatery.latitude} lon={eatery.longitude} zoomLevel={0.01} annotations={[new mapkit.MarkerAnnotation(
-					new mapkit.Coordinate(eatery.latitude, eatery.longitude),
-					{ title: eatery.nameshort }
-				)]} className="inline-map" />
+				<MapContainer center={[eatery.latitude, eatery.longitude]} zoom={16} scrollWheelZoom={true} style={{ height: 300 }}>
+					<TileLayer
+						attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					<Marker position={[eatery.latitude, eatery.longitude]}>
+						<Popup>
+							{eatery.nameshort}
+						</Popup>
+					</Marker>
+				</MapContainer>
 				<strong>
 					{eatery.location}
 				</strong><br />

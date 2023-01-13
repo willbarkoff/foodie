@@ -1,6 +1,7 @@
 import * as React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import App from "./components/App";
 
-render(<App />, document.querySelector("#app"));
+let root = createRoot(document.querySelector("#app")!);
+root.render(<React.StrictMode><App /></React.StrictMode>)

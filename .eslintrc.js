@@ -11,7 +11,6 @@ module.exports = {
 	],
 	globals: {
 		"module": "writable",
-		"mapkit": "readonly"
 	},
 	rules: {
 		"@typescript-eslint/ban-types": "off",
