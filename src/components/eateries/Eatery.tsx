@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
 
 import * as Eateries from "../../apis/eateries";
 import HealthyChoice from "./HealthyChoice";
@@ -10,6 +9,7 @@ import UpcomingMeals from "./UpcomingMeals";
 
 
 import "./Eatery.styl";
+import { Mapbox } from "../ui/Mapbox";
 
 interface EateryProps {
 	eatery: Eateries.Eatery
@@ -75,7 +75,7 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 				}
 			</div>
 			<div className="column is-one-fifth">
-				<MapContainer center={[eatery.latitude, eatery.longitude]} zoom={16} scrollWheelZoom={true} style={{ height: 300 }}>
+				{/* <MapContainer center={[eatery.latitude, eatery.longitude]} zoom={16} scrollWheelZoom={true} style={{ height: 300 }}>
 					<TileLayer
 						attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -85,7 +85,8 @@ const Eatery: React.FC<EateryProps> = ({ eatery }) => {
 							{eatery.nameshort}
 						</Popup>
 					</Marker>
-				</MapContainer>
+				</MapContainer> */}
+				<Mapbox startLat={eatery.latitude} startLng={eatery.longitude} startZoom={16} minHeight={300} marker={[eatery.longitude, eatery.latitude]} />
 				<strong>
 					{eatery.location}
 				</strong><br />

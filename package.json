@@ -18,12 +18,19 @@
   "bugs": {
     "url": "https://github.com/willbarkoff/foodie/issues"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "homepage": "https://github.com/willbarkoff/foodie#readme",
   "devDependencies": {
+    "@types/mapbox-gl": "^2.7.10",
     "@types/node": "^14.14.6",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@types/react-router-dom": "^5.1.6",
+    "@types/react-visibility-sensor": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "eslint": "^7.12.1",
@@ -40,10 +47,10 @@
     "@fortawesome/react-fontawesome": "^0.1.12",
     "bulma": "^0.9.1",
     "intl-relative-time-format": "^1.0.7",
-    "leaflet": "^1.9.3",
+    "mapbox-gl": "^2.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-leaflet": "^4.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-visibility-sensor": "^5.1.1"
   }
 }
